@@ -1,8 +1,8 @@
 #! bin/bash
 
 # Create network
-docker nertwork create --driver overlay frontend
-docker nertwork create --driver overlay backend 
+docker nertwork create -d overlay frontend
+docker nertwork create -d overlay backend 
 
 ## Create services
 
