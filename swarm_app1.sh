@@ -8,16 +8,16 @@ docker network create -d overlay backend
 
 
 ## Vote --replicas 2
-docker service create --name vote bretfisher/examplevotingapp_vote --replicas 1 --port 80:80 --network frontend
+docker service create --name vote --replicas 1 --port 80:80 --network frontend bretfisher/examplevotingapp_vote
 
 ## redis
-docker service create --name redis redis:3.2 --replicas 1 --network frontend
+docker service create --name redis --replics 1 --network frontend redis:3.2
 
 ## db
-docker service create --name db postgres:9.4 --replicas 1 --network backend --mount type=volume,source=db-data,target=/var/lib/postgresql/data
+docker service create --name db --replicas 1 --network backend --mount type=volume,source=db-data,target=/var/lib/postgresql/data postgres:9.4
 
 ## worker
-docker service create --name worker bretfisher/examplevotingapp_worker:java --replicas 1 --network frontend --network frontend
+docker service create --name worker --replicas 1 --network backend --network frontend bretfisher/examplevotingapp_worker:java
 
 ## result
-docker service create --name result bretfisher/examplevotingapp_result --replicas 1 --network backend -p 5001:80
+docker service create --name result --replicas 1 --network backend -p 80:50001 bretfisher/examplevotingapp_result
